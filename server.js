@@ -46,9 +46,17 @@ app.get('/health', (req, res) => {
 });
 
 app.post('/seed', (req, res) => {
-  const loaded = store.loadSeed();
-  if (!loaded) return res.status(409).json({ code: 'ALREADY_SEEDED', message: 'Already seeded' });
-  res.status(200).end();
+  try {
+    const loaded = store.loadSeed();
+    if (!loaded) return res.status(409).json({ code: 'ALREADY_SEEDED', message: 'Already seeded' });
+    res.status(200).end();
+  } catch (err) {
+    console.error('Seed failed:', err.message);
+    res.status(500).json({
+      code: 'SEED_FAILED',
+      message: err.code === 'ENOENT' ? 'Seed file (data/seed.json) not found' : err.message || 'Failed to load seed',
+    });
+  }
 });
 
 app.get('/areas', (req, res) => {
