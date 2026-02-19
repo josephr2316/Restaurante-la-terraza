@@ -5,15 +5,38 @@ API para gestión de áreas, mesas, disponibilidad por franjas horarias y reserv
 
 ---
 
+## Cómo corre el código (backend)
+
+Un solo comando levanta **todo**: la API real y la documentación Swagger.
+
+```bash
+npm start
+```
+
+Eso ejecuta `node server.js`:
+
+- **Un único servidor Express** escucha en el puerto (por defecto 3000; en Railway usa `process.env.PORT`).
+- **Rutas de la API:** `GET /health`, `POST /seed`, `GET /areas`, `POST /areas/:areaId/tables`, `GET /tables`, `GET /availability`, `POST /reservations`, `GET /reservations`, `PATCH /reservations/:id/status`.
+- **Documentación:** `GET /docs` (o `/api-docs`) sirve Swagger UI con `openapi.yml`.
+
+La data vive **en memoria** (objetos en el proceso). Al arrancar no hay áreas ni mesas hasta que alguien llame a **POST /seed**, que carga `data/seed.json`. Si reinicias el proceso (p. ej. en Railway), la memoria se vacía y puedes volver a hacer **POST /seed** para restaurar.
+
+**Resumen:** el backend y la doc corren juntos en el mismo proceso; no hay que levantar dos cosas por separado.
+
+---
+
 ## 1. Estructura del repo
 
 ```
-/openapi.yml          ← contrato API First (endpoints, body, respuestas, errores)
-/data/seed.json       ← data inicial: áreas + mesas + reglas (para arrancar el sistema)
-/data/sample_requests.json   ← ejemplos de requests (QA, equipo, tests)
-/data/postman_collection.json   ← (opcional) colección Postman
+/openapi.yml          ← contrato API First
+/data/seed.json       ← data inicial (POST /seed la carga)
+/data/sample_requests.json   ← ejemplos para QA/tests
+/data/postman_collection.json   ← (opcional) Postman
+/server.js            ← entrada: Express, rutas API + Swagger UI en /docs
+/store.js             ← estado en memoria: áreas, mesas, reglas, reservas
+/availability.js      ← lógica de disponibilidad y candidatos (incl. VIP A+B)
+/reservations.js      ← crear reserva y actualizar estado (penalidad por cancelación tardía)
 /README.md            ← este archivo
-/server.js             ← servidor Express que expone Swagger UI en /docs
 ```
 
 ---
