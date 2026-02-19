@@ -36,6 +36,7 @@ La data vive **en memoria** (objetos en el proceso). Al arrancar no hay áreas n
 /store.js             ← estado en memoria: áreas, mesas, reglas, reservas
 /availability.js      ← lógica de disponibilidad y candidatos (incl. VIP A+B)
 /reservations.js      ← crear reserva y actualizar estado (penalidad por cancelación tardía)
+/.github/workflows/   ← CI (ci.yml) y deploy a Railway (deploy.yml)
 /README.md            ← este archivo
 ```
 
@@ -98,9 +99,42 @@ Para entregar está bien usar solo memoria. Ten en cuenta:
 
 ---
 
-## 6. Flujo recomendado (paso a paso)
+## 6. Despliegue con GitHub Actions
 
-1. Copiar/confirmar archivos en el repo (openapi, data/seed, data/sample_requests).
+El proyecto está listo para desplegar con GitHub Actions a **Railway**.
+
+### Workflows incluidos
+
+| Archivo | Qué hace |
+|--------|----------|
+| `.github/workflows/ci.yml` | En cada push y en cada PR: instala dependencias (`npm ci`) y hace un smoke test de los módulos. No despliega. |
+| `.github/workflows/deploy.yml` | En cada push a `main` (o al ejecutarlo a mano): instala dependencias y ejecuta `railway up` para desplegar a Railway. |
+
+### Configuración necesaria
+
+1. **Crea un proyecto en Railway** (si no lo tienes): [railway.app](https://railway.app) → New Project → Empty Project. Añade un servicio y conéctalo a este repo (o deja que el deploy desde Actions lo suba).
+
+2. **Obtén un token y el ID del servicio:**
+   - **RAILWAY_TOKEN:** En Railway → Account Settings → Tokens → Create Token (usa un token de **cuenta**, no solo de proyecto).
+   - **RAILWAY_SERVICE_ID:** En tu proyecto → tu servicio → Settings → copia el **Service ID** (o el nombre del servicio, p. ej. `backend`).
+
+3. **Añade los secretos en GitHub:**  
+   Repo → Settings → Secrets and variables → Actions → New repository secret:
+   - `RAILWAY_TOKEN` = el token que creaste.
+   - `RAILWAY_SERVICE_ID` = el ID o nombre del servicio en Railway.
+
+4. **Sube a `main`** (o ejecuta el workflow a mano en Actions → Deploy to Railway → Run workflow).  
+   Tras el deploy, Railway te dará una URL pública. Recuerda llamar a **POST /seed** la primera vez para cargar áreas y mesas.
+
+### Alternativa sin GitHub Actions
+
+Puedes conectar el repo directamente en Railway (Deploy from GitHub). Railway desplegará en cada push a `main` sin usar el workflow de Actions. Los workflows de **CI** siguen siendo útiles para validar PRs.
+
+---
+
+## 7. Flujo recomendado (paso a paso)
+
+1. Copiar o confirmar archivos en el repo (openapi, data/seed, data/sample_requests).
 2. Implementar **GET /health** y **GET /docs** (Swagger UI).
 3. Implementar **POST /seed** con `data/seed.json`.
 4. Implementar **GET /availability** con **candidatos exactos** (IDs de mesas / combo VIP A+B).
@@ -112,7 +146,7 @@ Para entregar está bien usar solo memoria. Ten en cuenta:
 
 ---
 
-## 7. Uso rápido (referencia)
+## 8. Uso rápido (referencia)
 
 - **Health:** `GET /health`
 - **Seed:** `POST /seed` (200 = OK, 409 = ya cargado)

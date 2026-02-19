@@ -1,0 +1,29 @@
+# CI: instala dependencias y comprueba que el proyecto arranca (sin desplegar).
+# Se ejecuta en cada push y en cada pull request.
+
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Smoke test
+        run: node -e "require('./store'); require('./availability'); require('./reservations'); console.log('Modules OK');"
