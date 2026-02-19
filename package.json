@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "docs": "node server.js",
-    "test": "node -e \"require('./store'); require('./availability'); require('./reservations'); console.log('OK');\""
+    "test": "node --test tests/unit-solape.test.js tests/unit-capacity.test.js tests/integration-reserva-bloquea.test.js"
   },
   "keywords": [],
   "author": "",

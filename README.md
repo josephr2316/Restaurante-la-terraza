@@ -37,8 +37,20 @@ La data vive **en memoria** (objetos en el proceso). Al arrancar no hay áreas n
 /availability.js      ← lógica de disponibilidad y candidatos (incl. VIP A+B)
 /reservations.js      ← crear reserva y actualizar estado (penalidad por cancelación tardía)
 /.github/workflows/   ← CI (ci.yml) y deploy a Railway (deploy.yml)
+/tests/               ← unit tests (solape, capacidad) + integration (reserva bloquea slot)
 /README.md            ← este archivo
+/APPROACH.md, ERD.md, SEQUENCE.md, EDGE_CASES.md, CHECKLIST_ENTREGABLES.md
 ```
+
+---
+
+## Cómo correr tests
+
+```bash
+npm test
+```
+
+Ejecuta tests con Node (`node --test`): 2 unit (no solape, normalización capacidad 7→8) y 1 integration (crear reserva y comprobar que el slot queda bloqueado en GET /availability). Ver `tests/*.test.js`.
 
 ---
 
