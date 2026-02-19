@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "docs": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node -e \"require('./store'); require('./availability'); require('./reservations'); console.log('OK');\""
   },
   "keywords": [],
   "author": "",
