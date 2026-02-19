@@ -1,0 +1,1433 @@
+{
+  "info": {
+    "_postman_id": "90ce6349-d3c8-4d34-b193-f6503431919a",
+    "name": "Restaurant Reservations API",
+    "description": "API for area/table management, slot-based availability, and reservations.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "health",
+      "item": [
+        {
+          "name": "Health check",
+          "id": "a929376b-1b36-4dcf-a35a-a15959b275e9",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "health"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "fa40d839-443a-4d2f-b34a-add9b115cc71",
+              "name": "OK",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/health",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "health"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"ok\",\n  \"time\": \"2026-02-18T20:10:00-04:00\"\n}"
+            }
+          ]
+        }
+      ],
+      "id": "94adab56-8bd3-446b-b6be-d0b7a12f71d3"
+    },
+    {
+      "name": "seed",
+      "item": [
+        {
+          "name": "Seed initial data (optional but recommended)",
+          "id": "d3d3af07-69bf-49e8-89cf-f38ff7286c21",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/seed",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "seed"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "7cf900be-0f34-43c1-8222-b79fca77515e",
+              "name": "Seeded",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/seed",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "seed"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "text",
+              "header": [],
+              "cookie": [],
+              "body": ""
+            },
+            {
+              "id": "7fdab33a-46ac-4661-a0c2-769c1f70e769",
+              "name": "Already seeded",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/seed",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "seed"
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"code\": \"NO_AVAILABILITY\",\n  \"message\": \"No available tables for 2026-02-18 20:00.\",\n  \"details\": {\n    \"key_0\": false\n  }\n}"
+            }
+          ]
+        }
+      ],
+      "id": "57554006-9212-4915-8b48-be9da528e2d4"
+    },
+    {
+      "name": "areas",
+      "item": [
+        {
+          "name": "{areaId}",
+          "item": [
+            {
+              "name": "tables",
+              "item": [
+                {
+                  "name": "Add a table to an area (respects area limits)",
+                  "id": "42a41e3f-bcf3-4d62-8152-9fb15e35ce04",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"capacity\": 8,\n  \"tableType\": \"VIP_SQUARE\",\n  \"code\": \"string\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/areas/:areaId/tables",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "areas",
+                        ":areaId",
+                        "tables"
+                      ],
+                      "variable": [
+                        {
+                          "key": "areaId",
+                          "value": "string"
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "id": "98f97c5a-0ffb-4033-835b-59238e389327",
+                      "name": "Created",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"capacity\": 8,\n  \"tableType\": \"VIP_SQUARE\",\n  \"code\": \"string\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/areas/:areaId/tables",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "areas",
+                            ":areaId",
+                            "tables"
+                          ],
+                          "variable": [
+                            {
+                              "key": "areaId",
+                              "value": "string"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Created",
+                      "code": 201,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"id\": \"tbl_terrace_4_01\",\n  \"areaId\": \"area_terrace\",\n  \"code\": \"T4-01\",\n  \"capacity\": 4,\n  \"tableType\": \"VIP_SQUARE\",\n  \"isActive\": true\n}"
+                    },
+                    {
+                      "id": "1081ec05-a4d6-4e07-9947-4abb8b3e0d76",
+                      "name": "Invalid request",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"capacity\": 8,\n  \"tableType\": \"VIP_SQUARE\",\n  \"code\": \"string\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/areas/:areaId/tables",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "areas",
+                            ":areaId",
+                            "tables"
+                          ],
+                          "variable": [
+                            {
+                              "key": "areaId",
+                              "value": "string"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"code\": \"NO_AVAILABILITY\",\n  \"message\": \"No available tables for 2026-02-18 20:00.\",\n  \"details\": {\n    \"key_0\": false\n  }\n}"
+                    },
+                    {
+                      "id": "8bd845bc-df74-4a96-9d83-9abc8f68b7a3",
+                      "name": "Area table limit exceeded / VIP max exceeded",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"capacity\": 8,\n  \"tableType\": \"VIP_SQUARE\",\n  \"code\": \"string\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/areas/:areaId/tables",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "areas",
+                            ":areaId",
+                            "tables"
+                          ],
+                          "variable": [
+                            {
+                              "key": "areaId",
+                              "value": "string"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Conflict",
+                      "code": 409,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"code\": \"NO_AVAILABILITY\",\n  \"message\": \"No available tables for 2026-02-18 20:00.\",\n  \"details\": {\n    \"key_0\": false\n  }\n}"
+                    }
+                  ]
+                }
+              ],
+              "id": "52da6794-132c-4573-8733-d9625cb836d1"
+            }
+          ],
+          "id": "48430ca3-8b7f-4a28-8593-c1f4d05a7426"
+        },
+        {
+          "name": "List areas",
+          "id": "a6ea17b5-bb33-4030-bb65-6e32136428d7",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/areas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "areas"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "483f4769-5853-4331-819d-a971728e252e",
+              "name": "Areas",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/areas",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "areas"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n  {\n    \"id\": \"area_terrace\",\n    \"code\": \"TERRACE\",\n    \"name\": \"Terraza\",\n    \"maxTables\": 8\n  },\n  {\n    \"id\": \"area_terrace\",\n    \"code\": \"TERRACE\",\n    \"name\": \"Terraza\",\n    \"maxTables\": 8\n  }\n]"
+            }
+          ]
+        }
+      ],
+      "id": "b5a43cab-5135-413c-8d71-4a475f98a557"
+    },
+    {
+      "name": "tables",
+      "item": [
+        {
+          "name": "List tables (optionally filter by areaId)",
+          "id": "b884f78c-74ff-4b1c-b327-e35a01ce7e79",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/tables?areaId=string",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tables"
+              ],
+              "query": [
+                {
+                  "key": "areaId",
+                  "value": "string"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "3546d33f-b453-4679-bcbc-044b38bfbd7e",
+              "name": "Tables",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/tables?areaId=string",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "tables"
+                  ],
+                  "query": [
+                    {
+                      "key": "areaId",
+                      "value": "string"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n  {\n    \"id\": \"tbl_terrace_4_01\",\n    \"areaId\": \"area_terrace\",\n    \"code\": \"T4-01\",\n    \"capacity\": 4,\n    \"tableType\": \"STANDARD\",\n    \"isActive\": true\n  },\n  {\n    \"id\": \"tbl_terrace_4_01\",\n    \"areaId\": \"area_terrace\",\n    \"code\": \"T4-01\",\n    \"capacity\": 4,\n    \"tableType\": \"STANDARD\",\n    \"isActive\": true\n  }\n]"
+            }
+          ]
+        }
+      ],
+      "id": "e9417646-8afb-439a-a6ff-00864698c63a"
+    },
+    {
+      "name": "availability",
+      "item": [
+        {
+          "name": "Check availability by date/time/party size with slot-based rules",
+          "id": "4282e2b0-8144-4078-b10b-68d14f2fb5e5",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/availability?date=2026-02-18&startTime=20:00&partySize=7&durationMin=90&areaPreference=ANY",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "availability"
+              ],
+              "query": [
+                {
+                  "key": "date",
+                  "value": "2026-02-18"
+                },
+                {
+                  "key": "startTime",
+                  "value": "20:00"
+                },
+                {
+                  "key": "partySize",
+                  "value": "7"
+                },
+                {
+                  "key": "durationMin",
+                  "value": "90"
+                },
+                {
+                  "key": "areaPreference",
+                  "value": "ANY"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "5b316c0a-13a1-4f4d-9ea9-0c92129e9a85",
+              "name": "Availability result",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/availability?date=2026-02-18&startTime=20:00&partySize=7&durationMin=90&areaPreference=ANY",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "availability"
+                  ],
+                  "query": [
+                    {
+                      "key": "date",
+                      "value": "2026-02-18"
+                    },
+                    {
+                      "key": "startTime",
+                      "value": "20:00"
+                    },
+                    {
+                      "key": "partySize",
+                      "value": "7"
+                    },
+                    {
+                      "key": "durationMin",
+                      "value": "90"
+                    },
+                    {
+                      "key": "areaPreference",
+                      "value": "ANY"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"date\": \"1952-12-24\",\n  \"startTime\": \"string\",\n  \"durationMin\": 2731,\n  \"partySize\": 5433,\n  \"requiredCapacity\": 8622,\n  \"operatingHours\": {\n    \"opensAt\": \"16:00\",\n    \"closesAt\": \"00:00\",\n    \"timezone\": \"America/Santo_Domingo\"\n  },\n  \"bookingWindow\": {\n    \"minLeadMinutes\": 45,\n    \"maxDaysAhead\": 4\n  },\n  \"areaPriority\": [\n    \"VIP\",\n    \"TERRACE\",\n    \"PATIO\",\n    \"LOBBY\",\n    \"BAR\"\n  ],\n  \"options\": [\n    {\n      \"area\": \"VIP\",\n      \"feasible\": true,\n      \"candidates\": [\n        {\n          \"tableIds\": [\n            \"vip_a\",\n            \"vip_b\"\n          ],\n          \"capacity\": 6,\n          \"note\": \"VIP combo A+B\"\n        },\n        {\n          \"tableIds\": [\n            \"vip_a\",\n            \"vip_b\"\n          ],\n          \"capacity\": 6,\n          \"note\": \"VIP combo A+B\"\n        }\n      ]\n    },\n    {\n      \"area\": \"VIP\",\n      \"feasible\": true,\n      \"candidates\": [\n        {\n          \"tableIds\": [\n            \"vip_a\",\n            \"vip_b\"\n          ],\n          \"capacity\": 6,\n          \"note\": \"VIP combo A+B\"\n        },\n        {\n          \"tableIds\": [\n            \"vip_a\",\n            \"vip_b\"\n          ],\n          \"capacity\": 6,\n          \"note\": \"VIP combo A+B\"\n        }\n      ]\n    }\n  ]\n}"
+            },
+            {
+              "id": "63d54ebe-d7cf-43d1-be6b-ab7def11fba2",
+              "name": "Invalid query",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/availability?date=2026-02-18&startTime=20:00&partySize=7&durationMin=90&areaPreference=ANY",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "availability"
+                  ],
+                  "query": [
+                    {
+                      "key": "date",
+                      "value": "2026-02-18"
+                    },
+                    {
+                      "key": "startTime",
+                      "value": "20:00"
+                    },
+                    {
+                      "key": "partySize",
+                      "value": "7"
+                    },
+                    {
+                      "key": "durationMin",
+                      "value": "90"
+                    },
+                    {
+                      "key": "areaPreference",
+                      "value": "ANY"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"code\": \"NO_AVAILABILITY\",\n  \"message\": \"No available tables for 2026-02-18 20:00.\",\n  \"details\": {\n    \"key_0\": false\n  }\n}"
+            },
+            {
+              "id": "10438c29-c65c-439d-b86e-6f88afa999fe",
+              "name": "Not satisfiable (outside rules/time window)",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/availability?date=2026-02-18&startTime=20:00&partySize=7&durationMin=90&areaPreference=ANY",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "availability"
+                  ],
+                  "query": [
+                    {
+                      "key": "date",
+                      "value": "2026-02-18"
+                    },
+                    {
+                      "key": "startTime",
+                      "value": "20:00"
+                    },
+                    {
+                      "key": "partySize",
+                      "value": "7"
+                    },
+                    {
+                      "key": "durationMin",
+                      "value": "90"
+                    },
+                    {
+                      "key": "areaPreference",
+                      "value": "ANY"
+                    }
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"code\": \"NO_AVAILABILITY\",\n  \"message\": \"No available tables for 2026-02-18 20:00.\",\n  \"details\": {\n    \"key_0\": false\n  }\n}"
+            }
+          ]
+        }
+      ],
+      "id": "52451d0e-f5f9-4851-a770-4ece215b890d"
+    },
+    {
+      "name": "reservations",
+      "item": [
+        {
+          "name": "{id}",
+          "item": [
+            {
+              "name": "status",
+              "item": [
+                {
+                  "name": "Update reservation status (confirm/cancel/noshow/complete)",
+                  "id": "0776e516-2be2-4ea1-8830-1077b47e6b0e",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{bearerToken}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"status\": \"CONFIRMED\",\n  \"cancelledAt\": \"string\",\n  \"reason\": \"string\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/reservations/:id/status",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "reservations",
+                        ":id",
+                        "status"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "string"
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "id": "02a51783-a5fd-41e4-9e04-91e0991fbd31",
+                      "name": "Updated",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"status\": \"CONFIRMED\",\n  \"cancelledAt\": \"string\",\n  \"reason\": \"string\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/reservations/:id/status",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "reservations",
+                            ":id",
+                            "status"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "string"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"id\": \"rsv_01HR...\",\n  \"status\": \"CONFIRMED\",\n  \"date\": \"2006-06-27\",\n  \"startTime\": \"20:00\",\n  \"durationMin\": 90,\n  \"partySize\": 7,\n  \"requiredCapacity\": 8,\n  \"areaAssigned\": \"VIP\",\n  \"vipRequested\": true,\n  \"vipFulfilled\": false,\n  \"estimatedSpend\": 4900,\n  \"createdAt\": \"2026-02-18T19:00:00-04:00\",\n  \"tableAssignedIds\": [\n    \"string\",\n    \"string\"\n  ],\n  \"customerName\": \"string\",\n  \"phone\": \"string\",\n  \"email\": \"SVwd@GCjoACIJdaObZOnyGYYANoRDAJLRdcdCv.tut\",\n  \"notes\": \"string\",\n  \"occasion\": \"BIRTHDAY\",\n  \"source\": \"WALKIN\",\n  \"cancelPolicy\": {\n    \"freeCancelBeforeMinutes\": 120,\n    \"lateCancelPenaltyRate\": 0.5,\n    \"perPersonEstimate\": 700\n  },\n  \"penalty\": {\n    \"applied\": true,\n    \"amount\": 2450,\n    \"currency\": \"DOP\",\n    \"reason\": \"Late cancellation (< 2h)\"\n  },\n  \"expiresAt\": \"string\"\n}"
+                    },
+                    {
+                      "id": "cb792a68-13c9-4961-9a04-9927d578eedf",
+                      "name": "Invalid request",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"status\": \"CONFIRMED\",\n  \"cancelledAt\": \"string\",\n  \"reason\": \"string\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/reservations/:id/status",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "reservations",
+                            ":id",
+                            "status"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "string"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"code\": \"NO_AVAILABILITY\",\n  \"message\": \"No available tables for 2026-02-18 20:00.\",\n  \"details\": {\n    \"key_0\": false\n  }\n}"
+                    },
+                    {
+                      "id": "d46d43c0-b2b6-4354-9d30-7cb30a1ae1e9",
+                      "name": "Not found",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"status\": \"CONFIRMED\",\n  \"cancelledAt\": \"string\",\n  \"reason\": \"string\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/reservations/:id/status",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "reservations",
+                            ":id",
+                            "status"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "string"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"code\": \"NO_AVAILABILITY\",\n  \"message\": \"No available tables for 2026-02-18 20:00.\",\n  \"details\": {\n    \"key_0\": false\n  }\n}"
+                    },
+                    {
+                      "id": "38a3eb51-3314-40d4-8e70-d5d2302e2739",
+                      "name": "Invalid transition / cancel too late not allowed (if you ever choose option A later)",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"status\": \"CONFIRMED\",\n  \"cancelledAt\": \"string\",\n  \"reason\": \"string\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/reservations/:id/status",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "reservations",
+                            ":id",
+                            "status"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "string"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Conflict",
+                      "code": 409,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"code\": \"NO_AVAILABILITY\",\n  \"message\": \"No available tables for 2026-02-18 20:00.\",\n  \"details\": {\n    \"key_0\": false\n  }\n}"
+                    }
+                  ]
+                }
+              ],
+              "id": "bfcf3f43-14c8-4de7-9a45-081c99d4d3c4"
+            }
+          ],
+          "id": "4d41b344-d47c-455a-b61c-04ebd926a501"
+        },
+        {
+          "name": "Create reservation (blocks slots from Pending)",
+          "id": "584f84ba-fa2a-487a-8657-d231869103af",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"date\": \"2026-02-18\",\n  \"startTime\": \"20:00\",\n  \"partySize\": 7,\n  \"customerName\": \"Ana Pérez\",\n  \"phone\": \"+1-809-555-1212\",\n  \"source\": \"INSTAGRAM\",\n  \"durationMin\": 90,\n  \"areaPreference\": \"ANY\",\n  \"vipRequested\": false,\n  \"email\": \"oMg1@NcPLUfsNIKxSvjiAtuvUW.pyzt\",\n  \"notes\": \"string\",\n  \"occasion\": \"BIRTHDAY\",\n  \"assignedTableId\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/reservations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "reservations"
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "5bd75c14-3447-41aa-828d-0206a52e2fac",
+              "name": "Created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"date\": \"2026-02-18\",\n  \"startTime\": \"20:00\",\n  \"partySize\": 7,\n  \"customerName\": \"Ana Pérez\",\n  \"phone\": \"+1-809-555-1212\",\n  \"source\": \"INSTAGRAM\",\n  \"durationMin\": 90,\n  \"areaPreference\": \"ANY\",\n  \"vipRequested\": false,\n  \"email\": \"oMg1@NcPLUfsNIKxSvjiAtuvUW.pyzt\",\n  \"notes\": \"string\",\n  \"occasion\": \"BIRTHDAY\",\n  \"assignedTableId\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/reservations",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "reservations"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"id\": \"rsv_01HR...\",\n  \"status\": \"CONFIRMED\",\n  \"date\": \"2006-06-27\",\n  \"startTime\": \"20:00\",\n  \"durationMin\": 90,\n  \"partySize\": 7,\n  \"requiredCapacity\": 8,\n  \"areaAssigned\": \"VIP\",\n  \"vipRequested\": true,\n  \"vipFulfilled\": false,\n  \"estimatedSpend\": 4900,\n  \"createdAt\": \"2026-02-18T19:00:00-04:00\",\n  \"tableAssignedIds\": [\n    \"string\",\n    \"string\"\n  ],\n  \"customerName\": \"string\",\n  \"phone\": \"string\",\n  \"email\": \"SVwd@GCjoACIJdaObZOnyGYYANoRDAJLRdcdCv.tut\",\n  \"notes\": \"string\",\n  \"occasion\": \"BIRTHDAY\",\n  \"source\": \"WALKIN\",\n  \"cancelPolicy\": {\n    \"freeCancelBeforeMinutes\": 120,\n    \"lateCancelPenaltyRate\": 0.5,\n    \"perPersonEstimate\": 700\n  },\n  \"penalty\": {\n    \"applied\": true,\n    \"amount\": 2450,\n    \"currency\": \"DOP\",\n    \"reason\": \"Late cancellation (< 2h)\"\n  },\n  \"expiresAt\": \"string\"\n}"
+            },
+            {
+              "id": "1884ebf0-4501-454b-868e-7a3d138414d5",
+              "name": "Invalid request",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"date\": \"2026-02-18\",\n  \"startTime\": \"20:00\",\n  \"partySize\": 7,\n  \"customerName\": \"Ana Pérez\",\n  \"phone\": \"+1-809-555-1212\",\n  \"source\": \"INSTAGRAM\",\n  \"durationMin\": 90,\n  \"areaPreference\": \"ANY\",\n  \"vipRequested\": false,\n  \"email\": \"oMg1@NcPLUfsNIKxSvjiAtuvUW.pyzt\",\n  \"notes\": \"string\",\n  \"occasion\": \"BIRTHDAY\",\n  \"assignedTableId\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/reservations",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "reservations"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"code\": \"NO_AVAILABILITY\",\n  \"message\": \"No available tables for 2026-02-18 20:00.\",\n  \"details\": {\n    \"key_0\": false\n  }\n}"
+            },
+            {
+              "id": "d1488b84-9a8d-47be-b8d8-b414873319b4",
+              "name": "Slot conflict / area limits / overlapping reservation",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"date\": \"2026-02-18\",\n  \"startTime\": \"20:00\",\n  \"partySize\": 7,\n  \"customerName\": \"Ana Pérez\",\n  \"phone\": \"+1-809-555-1212\",\n  \"source\": \"INSTAGRAM\",\n  \"durationMin\": 90,\n  \"areaPreference\": \"ANY\",\n  \"vipRequested\": false,\n  \"email\": \"oMg1@NcPLUfsNIKxSvjiAtuvUW.pyzt\",\n  \"notes\": \"string\",\n  \"occasion\": \"BIRTHDAY\",\n  \"assignedTableId\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/reservations",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "reservations"
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"code\": \"NO_AVAILABILITY\",\n  \"message\": \"No available tables for 2026-02-18 20:00.\",\n  \"details\": {\n    \"key_0\": false\n  }\n}"
+            },
+            {
+              "id": "8b48c2fa-22e5-4cf5-89a2-7d5d302dfa1f",
+              "name": "Not satisfiable (no availability / outside booking window / outside operating hours)",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"date\": \"2026-02-18\",\n  \"startTime\": \"20:00\",\n  \"partySize\": 7,\n  \"customerName\": \"Ana Pérez\",\n  \"phone\": \"+1-809-555-1212\",\n  \"source\": \"INSTAGRAM\",\n  \"durationMin\": 90,\n  \"areaPreference\": \"ANY\",\n  \"vipRequested\": false,\n  \"email\": \"oMg1@NcPLUfsNIKxSvjiAtuvUW.pyzt\",\n  \"notes\": \"string\",\n  \"occasion\": \"BIRTHDAY\",\n  \"assignedTableId\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/reservations",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "reservations"
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"code\": \"NO_AVAILABILITY\",\n  \"message\": \"No available tables for 2026-02-18 20:00.\",\n  \"details\": {\n    \"key_0\": false\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "List reservations by date (and optional areaId)",
+          "id": "a65c9f44-6eee-436e-8f67-c43d6001a298",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/reservations?date=1983-05-07&areaId=string",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "reservations"
+              ],
+              "query": [
+                {
+                  "key": "date",
+                  "value": "1983-05-07"
+                },
+                {
+                  "key": "areaId",
+                  "value": "string"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a9105e1b-8c81-4ce5-ab29-1a66b545f82d",
+              "name": "Reservations",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/reservations?date=1983-05-07&areaId=string",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "reservations"
+                  ],
+                  "query": [
+                    {
+                      "key": "date",
+                      "value": "1983-05-07"
+                    },
+                    {
+                      "key": "areaId",
+                      "value": "string"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "[\n  {\n    \"id\": \"rsv_01HR...\",\n    \"status\": \"CONFIRMED\",\n    \"date\": \"1978-01-06\",\n    \"startTime\": \"20:00\",\n    \"durationMin\": 90,\n    \"partySize\": 7,\n    \"requiredCapacity\": 8,\n    \"areaAssigned\": \"VIP\",\n    \"vipRequested\": true,\n    \"vipFulfilled\": false,\n    \"estimatedSpend\": 4900,\n    \"createdAt\": \"2026-02-18T19:00:00-04:00\",\n    \"tableAssignedIds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"customerName\": \"string\",\n    \"phone\": \"string\",\n    \"email\": \"r5WU@uePQuTgGlsfwqraGEUuUDyhsoRJAC.zbmh\",\n    \"notes\": \"string\",\n    \"occasion\": \"NONE\",\n    \"source\": \"INSTAGRAM\",\n    \"cancelPolicy\": {\n      \"freeCancelBeforeMinutes\": 120,\n      \"lateCancelPenaltyRate\": 0.5,\n      \"perPersonEstimate\": 700\n    },\n    \"penalty\": {\n      \"applied\": true,\n      \"amount\": 2450,\n      \"currency\": \"DOP\",\n      \"reason\": \"Late cancellation (< 2h)\"\n    },\n    \"expiresAt\": \"string\"\n  },\n  {\n    \"id\": \"rsv_01HR...\",\n    \"status\": \"NOSHOW\",\n    \"date\": \"2007-12-14\",\n    \"startTime\": \"20:00\",\n    \"durationMin\": 90,\n    \"partySize\": 7,\n    \"requiredCapacity\": 8,\n    \"areaAssigned\": \"VIP\",\n    \"vipRequested\": true,\n    \"vipFulfilled\": false,\n    \"estimatedSpend\": 4900,\n    \"createdAt\": \"2026-02-18T19:00:00-04:00\",\n    \"tableAssignedIds\": [\n      \"string\",\n      \"string\"\n    ],\n    \"customerName\": \"string\",\n    \"phone\": \"string\",\n    \"email\": \"zfafJVIBt28jwbv@IQvDRI.zibd\",\n    \"notes\": \"string\",\n    \"occasion\": \"OTHER\",\n    \"source\": \"INSTAGRAM\",\n    \"cancelPolicy\": {\n      \"freeCancelBeforeMinutes\": 120,\n      \"lateCancelPenaltyRate\": 0.5,\n      \"perPersonEstimate\": 700\n    },\n    \"penalty\": {\n      \"applied\": true,\n      \"amount\": 2450,\n      \"currency\": \"DOP\",\n      \"reason\": \"Late cancellation (< 2h)\"\n    },\n    \"expiresAt\": \"string\"\n  }\n]"
+            }
+          ]
+        }
+      ],
+      "id": "f2039cf7-e7a1-49dc-9da9-e8b166883602"
+    }
+  ],
+  "variable": [
+    {
+      "id": "03f3a874-97f2-4731-aa27-d9bd29ffacfa",
+      "key": "baseUrl",
+      "value": "https://YOUR-RAILWAY-URL"
+    }
+  ]
+}
