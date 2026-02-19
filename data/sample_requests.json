@@ -1,0 +1,73 @@
+{
+  "availability_examples": [
+    {
+      "name": "Peak hour 7 people (round up to 8)",
+      "query": { "date": "2026-02-20", "startTime": "20:00", "partySize": 7, "durationMin": 90, "areaPreference": "ANY" }
+    },
+    {
+      "name": "VIP 6 people should allow A+B combo",
+      "query": { "date": "2026-02-20", "startTime": "21:00", "partySize": 6, "durationMin": 120, "areaPreference": "VIP" }
+    }
+  ],
+  "reservation_examples": [
+    {
+      "name": "Create 2 people bar",
+      "body": {
+        "date": "2026-02-20",
+        "startTime": "19:00",
+        "partySize": 2,
+        "durationMin": 90,
+        "areaPreference": "BAR",
+        "vipRequested": false,
+        "customerName": "Luis Gómez",
+        "phone": "+1-809-555-1001",
+        "email": "luis@example.com",
+        "notes": "Mesa cerca de la pared",
+        "occasion": "NONE",
+        "source": "WHATSAPP"
+      }
+    },
+    {
+      "name": "Create 7 people ANY (requires 8-cap table)",
+      "body": {
+        "date": "2026-02-20",
+        "startTime": "20:00",
+        "partySize": 7,
+        "durationMin": 90,
+        "areaPreference": "ANY",
+        "vipRequested": false,
+        "customerName": "Ana Pérez",
+        "phone": "+1-809-555-1002",
+        "email": null,
+        "notes": "Llegan 10 min tarde",
+        "occasion": "BIRTHDAY",
+        "source": "INSTAGRAM"
+      }
+    },
+    {
+      "name": "Create VIP 6 (A+B)",
+      "body": {
+        "date": "2026-02-20",
+        "startTime": "21:00",
+        "partySize": 6,
+        "durationMin": 120,
+        "areaPreference": "VIP",
+        "vipRequested": true,
+        "customerName": "María López",
+        "phone": "+1-809-555-1003",
+        "email": "maria@example.com",
+        "notes": "VIP sí o sí si hay",
+        "occasion": "ANNIVERSARY",
+        "source": "WHATSAPP"
+      }
+    },
+    {
+      "name": "Cancel confirmed late (penalty applies)",
+      "body": {
+        "reservationId": "REPLACE_ME",
+        "newStatus": "CANCELLED",
+        "reason": "Client cancelled 90 minutes before"
+      }
+    }
+  ]
+}

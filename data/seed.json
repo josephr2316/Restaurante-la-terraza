@@ -1,0 +1,63 @@
+{
+  "areas": [
+    { "id": "area_vip", "code": "VIP", "name": "Salones VIP", "maxTables": 3 },
+    { "id": "area_terrace", "code": "TERRACE", "name": "Terraza", "maxTables": 8 },
+    { "id": "area_patio", "code": "PATIO", "name": "Patio", "maxTables": 8 },
+    { "id": "area_lobby", "code": "LOBBY", "name": "Lobby", "maxTables": 8 },
+    { "id": "area_bar", "code": "BAR", "name": "Bar", "maxTables": 8 }
+  ],
+  "tables": [
+    { "id": "vip_round_10", "areaId": "area_vip", "code": "VIP-R10", "capacity": 10, "tableType": "VIP_ROUND" },
+    { "id": "vip_a", "areaId": "area_vip", "code": "VIP-A", "capacity": 4, "tableType": "VIP_SQUARE" },
+    { "id": "vip_b", "areaId": "area_vip", "code": "VIP-B", "capacity": 4, "tableType": "VIP_SQUARE" },
+
+    { "id": "t2_01", "areaId": "area_terrace", "code": "T2-01", "capacity": 2, "tableType": "STANDARD" },
+    { "id": "t2_02", "areaId": "area_terrace", "code": "T2-02", "capacity": 2, "tableType": "STANDARD" },
+    { "id": "t4_01", "areaId": "area_terrace", "code": "T4-01", "capacity": 4, "tableType": "STANDARD" },
+    { "id": "t4_02", "areaId": "area_terrace", "code": "T4-02", "capacity": 4, "tableType": "STANDARD" },
+    { "id": "t4_03", "areaId": "area_terrace", "code": "T4-03", "capacity": 4, "tableType": "STANDARD" },
+    { "id": "t6_01", "areaId": "area_terrace", "code": "T6-01", "capacity": 6, "tableType": "STANDARD" },
+    { "id": "t6_02", "areaId": "area_terrace", "code": "T6-02", "capacity": 6, "tableType": "STANDARD" },
+    { "id": "t8_01", "areaId": "area_terrace", "code": "T8-01", "capacity": 8, "tableType": "STANDARD" },
+
+    { "id": "p2_01", "areaId": "area_patio", "code": "P2-01", "capacity": 2, "tableType": "STANDARD" },
+    { "id": "p2_02", "areaId": "area_patio", "code": "P2-02", "capacity": 2, "tableType": "STANDARD" },
+    { "id": "p4_01", "areaId": "area_patio", "code": "P4-01", "capacity": 4, "tableType": "STANDARD" },
+    { "id": "p4_02", "areaId": "area_patio", "code": "P4-02", "capacity": 4, "tableType": "STANDARD" },
+    { "id": "p4_03", "areaId": "area_patio", "code": "P4-03", "capacity": 4, "tableType": "STANDARD" },
+    { "id": "p6_01", "areaId": "area_patio", "code": "P6-01", "capacity": 6, "tableType": "STANDARD" },
+    { "id": "p8_01", "areaId": "area_patio", "code": "P8-01", "capacity": 8, "tableType": "STANDARD" },
+
+    { "id": "l2_01", "areaId": "area_lobby", "code": "L2-01", "capacity": 2, "tableType": "STANDARD" },
+    { "id": "l2_02", "areaId": "area_lobby", "code": "L2-02", "capacity": 2, "tableType": "STANDARD" },
+    { "id": "l4_01", "areaId": "area_lobby", "code": "L4-01", "capacity": 4, "tableType": "STANDARD" },
+    { "id": "l4_02", "areaId": "area_lobby", "code": "L4-02", "capacity": 4, "tableType": "STANDARD" },
+    { "id": "l4_03", "areaId": "area_lobby", "code": "L4-03", "capacity": 4, "tableType": "STANDARD" },
+    { "id": "l6_01", "areaId": "area_lobby", "code": "L6-01", "capacity": 6, "tableType": "STANDARD" },
+
+    { "id": "b2_01", "areaId": "area_bar", "code": "B2-01", "capacity": 2, "tableType": "STANDARD" },
+    { "id": "b2_02", "areaId": "area_bar", "code": "B2-02", "capacity": 2, "tableType": "STANDARD" },
+    { "id": "b4_01", "areaId": "area_bar", "code": "B4-01", "capacity": 4, "tableType": "STANDARD" },
+    { "id": "b4_02", "areaId": "area_bar", "code": "B4-02", "capacity": 4, "tableType": "STANDARD" },
+    { "id": "b4_03", "areaId": "area_bar", "code": "B4-03", "capacity": 4, "tableType": "STANDARD" }
+  ],
+  "rules": {
+    "timezone": "America/Santo_Domingo",
+    "operatingHours": { "opensAt": "16:00", "closesAt": "00:00" },
+    "slotMinutes": 15,
+    "durationsAllowed": [90, 120, 180],
+    "defaultDuration": 90,
+    "minLeadMinutes": 45,
+    "maxDaysAhead": 4,
+    "areaPriorityAny": ["VIP", "TERRACE", "PATIO", "LOBBY", "BAR"],
+    "capacityOptions": [2, 4, 6, 8, 10],
+    "vipCombo": { "enabled": true, "aId": "vip_a", "bId": "vip_b", "comboCapacity": 6 },
+    "pendingExpiryMinutes": 15,
+    "cancelPolicy": {
+      "freeCancelBeforeMinutes": 120,
+      "lateCancelPenaltyRate": 0.5,
+      "perPersonEstimate": 700,
+      "currency": "DOP"
+    }
+  }
+}
