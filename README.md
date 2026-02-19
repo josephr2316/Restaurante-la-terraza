@@ -114,14 +114,14 @@ El proyecto está listo para desplegar con GitHub Actions a **Railway**.
 
 1. **Crea un proyecto en Railway** (si no lo tienes): [railway.app](https://railway.app) → New Project → Empty Project. Añade un servicio y conéctalo a este repo (o deja que el deploy desde Actions lo suba).
 
-2. **Obtén un token y el ID del servicio:**
+2. **Obtén un token y el ID del servicio (ambos son obligatorios):**
    - **RAILWAY_TOKEN:** En Railway → Account Settings → Tokens → Create Token (usa un token de **cuenta**, no solo de proyecto).
-   - **RAILWAY_SERVICE_ID:** En tu proyecto → tu servicio → Settings → copia el **Service ID** (o el nombre del servicio, p. ej. `backend`).
+   - **RAILWAY_SERVICE_ID:** En tu proyecto → tu servicio → **Settings** → en "Service" copia el **Service ID** (UUID) o usa el nombre del servicio (p. ej. `backend`).
 
-3. **Añade los secretos en GitHub:**  
-   Repo → Settings → Secrets and variables → Actions → New repository secret:
+3. **Añade los dos secretos en GitHub:**  
+   Repo → **Settings** → **Secrets and variables** → **Actions** → **New repository secret** (crea los dos):
    - `RAILWAY_TOKEN` = el token que creaste.
-   - `RAILWAY_SERVICE_ID` = el ID o nombre del servicio en Railway.
+   - `RAILWAY_SERVICE_ID` = el Service ID o nombre del servicio (si falta este, el deploy falla con *"a value is required for '--service'"*).
 
 4. **Sube a `main`** (o ejecuta el workflow a mano en Actions → Deploy to Railway → Run workflow).  
    Tras el deploy, Railway te dará una URL pública. Recuerda llamar a **POST /seed** la primera vez para cargar áreas y mesas.

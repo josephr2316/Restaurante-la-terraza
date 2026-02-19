@@ -1,5 +1,5 @@
 # Despliega el backend a Railway cuando se hace push a main.
-# Secretos necesarios en GitHub: RAILWAY_TOKEN (y opcionalmente RAILWAY_SERVICE_ID).
+# Secretos obligatorios en GitHub: RAILWAY_TOKEN y RAILWAY_SERVICE_ID.
 
 name: Deploy to Railway
 
@@ -8,13 +8,22 @@ on:
     branches: [main]
   workflow_dispatch:
 
-env:
-  RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Check secrets
+        run: |
+          if [ -z "${{ secrets.RAILWAY_TOKEN }}" ]; then
+            echo "::error::Falta el secreto RAILWAY_TOKEN. Añádelo en Settings → Secrets and variables → Actions."
+            exit 1
+          fi
+          if [ -z "${{ secrets.RAILWAY_SERVICE_ID }}" ]; then
+            echo "::error::Falta el secreto RAILWAY_SERVICE_ID. En Railway: tu servicio → Settings → copia el Service ID. Luego en GitHub: Settings → Secrets → New repository secret."
+            exit 1
+          fi
+          echo "Secrets OK"
+
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -28,6 +37,6 @@ jobs:
         run: npm ci
 
       - name: Deploy to Railway
-        run: npx @railway/cli up --service ${{ secrets.RAILWAY_SERVICE_ID }} --ci
+        run: npx @railway/cli up --service "${{ secrets.RAILWAY_SERVICE_ID }}" --ci
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
